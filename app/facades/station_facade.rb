@@ -2,10 +2,27 @@ class StationFacade
   attr_reader :station_name,
               :station_address,
               :station_fuel_type,
-              :station_access_time
+              :station_access_time,
+              :station_distance,
+              :station_travel_time,
+              :station_directions
 
   def initialize(location)
+    @station_name        = ""
+    @station_address     = ""
+    @station_fuel_type   = ""
+    @station_access_time = ""
+    @station_distance    = ""
+    @station_travel_time = ""
+    @station_direction   = []
     response = NRELService.get_electric_stations(location)
+    initialize_station(response)
+    initialize_directions(location, @station_name)
+  end
+
+  private
+
+  def initialize_station(response)
     station = response[:fuel_stations].first
     @station_name        = station[:station_name]
     @station_address     = address(station)
@@ -13,7 +30,7 @@ class StationFacade
     @station_access_time = station[:access_days_time]
   end
 
-  private
+  def initialize(directions)
 
   def address(station)
     street = station[:street_address]
