@@ -40,7 +40,12 @@ RSpec.describe 'As a user' do
     end
 
     it 'should also show distance, travel time, and html direction instructions', :vcr do
-
+      within '#direction-info' do
+        expect(page).to have_content('Distance: 0.1 mi')
+        expect(page).to have_content('Duration: 1 min')
+        expect(page).to have_conten('Head <b>southeast</b> on <b>17th St</b> toward <b>Larimer St</b>
+          Turn <b>left</b> onto <b>Lawrence St</b><div style=\"font-size:0.9em\">Destination will be on the left</div>')
+      end
     end
   end
 end
