@@ -30,7 +30,16 @@ class StationFacade
     @station_access_time = station[:access_days_time]
   end
 
-  def initialize(directions)
+  #out of time
+  def initialize_directions(origin, destination)
+    response = DirectionService.get_directions(origin, destination)
+    response[:distance][:text]
+    response[:duration][:text]
+    response[:steps].each do |step|
+      step[:html_instructions]
+    end
+      
+  end
 
   def address(station)
     street = station[:street_address]
